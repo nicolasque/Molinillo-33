@@ -177,6 +177,48 @@ h1 {
 }
 
 
+footer {
+  background-color: #333;
+  color: white;
+  padding: 1rem 1rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-logo h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-info {
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.9rem;
+}
+
+.footer-info a {
+  color: #4CAF50;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.footer-info a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+  .footer-logo h3 {
+    font-size: 1.5rem;
+  }
+}
+
 
 /* Estilos para pantallas medianas (tablets) */
 @media (max-width: 768px) {
@@ -238,45 +280,10 @@ h1 {
     flex-direction: column;
     gap: 1rem;
   }
+  .footer-logo h3 {
+    font-size: 1.2rem;
+  }
 }
-
-footer {
-  background-color: #333;
-  color: white;
-  padding: 2rem 1rem;
-}
-
-.footer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer-logo h3 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.footer-info {
-  text-align: center;
-  line-height: 1.6;
-}
-
-.footer-info a {
-  color: #4CAF50;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1rem;
-}
-
-.footer-info a:hover {
-  text-decoration: underline;
-}
-
-/* Estilos para pantallas medianas (tablets) */
-@media (max
-
 
 
 
