@@ -29,14 +29,15 @@ const menuItems = {
 
     ],
     nuestros_tacos: [
-      { name: 'Taco de suadero', price: '2,20€' },
+      { name: 'Taco de suadero', price: '2,20€' ,ingredients:['Ternera, cebolla, cilantro'] , picture: 'img/Taco-suadero.jpg'},
       { name: 'taco de cochinita', price: '2,20€' },
       { name: 'taco de carnitas', price: '2,20€' },
 
     ],
     bebidas: [
       { name: 'Soda', price: '$1.99' },
-      { name: 'Agua', price: '$1.49' },
+      { name: 'Agua', price: '$1.49', ingredients: ['potatoes', 'carrots', 'peas', 'mayonnaise'],
+      picture: 'path/to/ensaladilla_rusa.jpg' },
     ],
     postre: [
       { name: 'tarta de chocolate', price: '3€' , tags: ['celiaco']},
@@ -66,31 +67,105 @@ const menuItems = {
   }
   
 
-  // Funcion que muestra los items de la categoria seleccionada
-  function showCategoryItems(category) {
-    menuContainer.innerHTML = '';
+  // // Funcion que muestra los items de la categoria seleccionada
+  // function showCategoryItems(category) {
+  //   menuContainer.innerHTML = '';
   
-    menuItems[category].forEach((item) => {
-      const menuItem = document.createElement('div');
-      menuItem.classList.add('menu-item');
+  //   menuItems[category].forEach((item) => {
+  //     const menuItem = document.createElement('div');
+  //     menuItem.classList.add('menu-item');
   
-      const menuItemName = document.createElement('span');
-      menuItemName.textContent = item.name;
+  //     const menuItemName = document.createElement('span');
+  //     menuItemName.textContent = item.name;
   
-      const menuItemPrice = document.createElement('span');
-      menuItemPrice.textContent = item.price;
+  //     const menuItemPrice = document.createElement('span');
+  //     menuItemPrice.textContent = item.price;
   
-      menuItem.appendChild(menuItemName);
-      menuItem.appendChild(menuItemPrice);
+  //     menuItem.appendChild(menuItemName);
+  //     menuItem.appendChild(menuItemPrice);
 
-      addIconsIfTagsExist(item, menuItem); // Llamar a la función para agregar íconos si el ítem tiene etiquetas
+  //     addIconsIfTagsExist(item, menuItem); // Llamar a la función para agregar íconos si el ítem tiene etiquetas
 
   
-      menuContainer.appendChild(menuItem);
+  //     menuContainer.appendChild(menuItem);
+  //   });
+  
+  //   updateSelectedCategory(category);
+  // }
+  
+///!!Funcion de tabla de ingredientes
+// ... Previous code
+
+// Function to create a table with ingredients and a picture
+function createItemDetails(item) {
+  const itemDetails = document.createElement('div');
+  itemDetails.classList.add('item-details');
+
+  const ingredientsList = document.createElement('ul');
+  ingredientsList.classList.add('ingredients-list');
+
+  item.ingredients.forEach(ingredient => {
+    const ingredientItem = document.createElement('li');
+    ingredientItem.textContent = ingredient;
+    ingredientsList.appendChild(ingredientItem);
+  });
+
+  const itemPicture = document.createElement('img');
+  itemPicture.classList.add('item-picture');
+  itemPicture.src = item.picture;
+  itemPicture.alt = `${item.name} picture`;
+
+  itemDetails.appendChild(ingredientsList);
+  itemDetails.appendChild(itemPicture);
+
+  return itemDetails;
+}
+
+// Function that displays the items of the selected category
+function showCategoryItems(category) {
+  menuContainer.innerHTML = '';
+
+  menuItems[category].forEach((item) => {
+    const menuItem = document.createElement('div');
+    menuItem.classList.add('menu-item');
+
+    const menuItemName = document.createElement('span');
+    menuItemName.textContent = item.name;
+
+    const menuItemPrice = document.createElement('span');
+    menuItemPrice.textContent = item.price;
+
+    menuItem.appendChild(menuItemName);
+    menuItem.appendChild(menuItemPrice);
+
+    addIconsIfTagsExist(item, menuItem); // Call the function to add icons if the item has tags
+
+    // Add the item details (ingredients and picture) to the menuItem
+    if (item.ingredients && item.picture) {
+      const itemDetails = createItemDetails(item);
+      itemDetails.style.display = 'none'; // Initially hide the item details
+      menuItem.appendChild(itemDetails);
+    }
+
+    // Toggle the display of item details when clicking on the menuItem
+    menuItem.addEventListener('click', () => {
+      const itemDetails = menuItem.querySelector('.item-details');
+      if (itemDetails) {
+        itemDetails.style.display = itemDetails.style.display === 'none' ? 'flex' : 'none';
+      }
     });
-  
-    updateSelectedCategory(category);
-  }
+
+    menuContainer.appendChild(menuItem);
+  });
+
+  updateSelectedCategory(category);
+}
+
+// ... Remaining code
+
+
+
+
   
   
   // Funcion que actualiza el boton de la categoria seleccionada
@@ -133,7 +208,7 @@ function getSvgPathForTag(tag) {
     case 'vegetariano':
       return '<svg> ... </svg>'; // Reemplaza con el código SVG o la ruta al archivo SVG para el ícono vegetariano
     case 'celiaco':
-      return '<img src="img/alergenos/Gluten.svg" alt="con gluten"/>'; // Reemplaza con el código SVG o la ruta al archivo SVG para el ícono sin gluten
+      return '<img src="img/alergenos/Gluten.svg" alt="con gluten" class="gluten"/>'; // Reemplaza con el código SVG o la ruta al archivo SVG para el ícono sin gluten
     case 'sin_lactosa':
       return '<svg> ... </svg>'; // Reemplaza con el código SVG o la ruta al archivo SVG para el ícono sin lactosa
     // Agrega más casos según las etiquetas que necesites
